@@ -142,12 +142,15 @@ public class ExtractJsonValueImpl {
         try {
             NDataSourceAdminStub stub = EventProcessorUIUtils.getNDataSourceAdminStub(config, session, request);
             WSDataSourceInfo[] allDataSources = stub.getAllDataSources();
-            DataSourceReader dsReader = new RDBMSDataSourceReader();
-            for (WSDataSourceInfo info : allDataSources) {
-                WSDataSourceMetaInfo metaInfo = info.getDsMetaInfo();
-                Object dsObject = dsReader.createDataSource(metaInfo.getDefinition().getDsXMLConfiguration(), false);
-                if (dsObject instanceof javax.sql.DataSource) {
-                    manager.setDataSource(metaInfo.getName(), (javax.sql.DataSource) dsObject);
+            if (allDataSources != null) {
+                DataSourceReader dsReader = new RDBMSDataSourceReader();
+                for (WSDataSourceInfo info : allDataSources) {
+                    WSDataSourceMetaInfo metaInfo = info.getDsMetaInfo();
+                    Object dsObject = dsReader.createDataSource(metaInfo.getDefinition()
+                                    .getDsXMLConfiguration(), false);
+                    if (dsObject instanceof javax.sql.DataSource) {
+                        manager.setDataSource(metaInfo.getName(), (javax.sql.DataSource) dsObject);
+                    }
                 }
             }
         } catch (AxisFault axisFault) {
