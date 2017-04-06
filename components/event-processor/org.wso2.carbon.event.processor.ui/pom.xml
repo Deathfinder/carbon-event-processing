@@ -79,12 +79,12 @@
         </dependency>
     </dependencies>
     <distributionManagement>
-        <snapshotRepository>
+        <repository>
             <id>xm-snapshot-local</id>
             <uniqueVersion>true</uniqueVersion>
             <name>Private Artifactory (snapshots)</name>
             <url>https://artifactory.jbs.com.ua/artifactory/xm-snapshot-local</url>
-        </snapshotRepository>
+        </repository>
     </distributionManagement>
 
     <build>
