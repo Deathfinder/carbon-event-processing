@@ -120,7 +120,7 @@ public class ExtractJsonValueImpl {
 
             if (executionPlanArray.get(k).getAsJsonObject().get("Function") != null) {
                 JsonArray functionArray = executionPlanArray.get(k).getAsJsonObject().getAsJsonArray("Function");
-                setTriggerJsonValue(functionArray);
+                setFunctionJsonValue(functionArray);
             }
 
             if (executionPlanArray.get(k).getAsJsonObject().get("Partition") != null) {

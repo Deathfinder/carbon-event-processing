@@ -78,7 +78,14 @@
             <artifactId>org.wso2.carbon.ndatasource.rdbms</artifactId>
         </dependency>
     </dependencies>
-
+    <distributionManagement>
+        <snapshotRepository>
+            <id>xm-snapshot-local</id>
+            <uniqueVersion>true</uniqueVersion>
+            <name>Private Artifactory (snapshots)</name>
+            <url>https://artifactory.jbs.com.ua/artifactory/xm-snapshot-local</url>
+        </snapshotRepository>
+    </distributionManagement>
 
     <build>
         <plugins>
