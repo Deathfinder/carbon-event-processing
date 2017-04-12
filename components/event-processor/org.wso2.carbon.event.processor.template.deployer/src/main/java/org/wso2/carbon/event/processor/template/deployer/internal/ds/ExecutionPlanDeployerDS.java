@@ -23,6 +23,8 @@ import org.wso2.carbon.event.processor.template.deployer.ExecutionPlanTemplateDe
 import org.wso2.carbon.event.processor.template.deployer.internal.ExecutionPlanDeployerValueHolder;
 import org.wso2.carbon.event.processor.core.EventProcessorService;
 import org.wso2.carbon.event.stream.core.EventStreamService;
+import org.wso2.carbon.registry.core.exceptions.RegistryException;
+import org.wso2.carbon.registry.core.service.RegistryService;
 
 
 /**
@@ -33,6 +35,9 @@ import org.wso2.carbon.event.stream.core.EventStreamService;
  * @scr.reference name="eventProcessorService.service"
  * interface="org.wso2.carbon.event.processor.core.EventProcessorService" cardinality="1..1"
  * policy="dynamic" bind="setEventProcessorService" unbind="unsetEventProcessorService"
+ * @scr.reference name="registry.service"
+ * interface="org.wso2.carbon.registry.core.service.RegistryService"
+ * cardinality="1..1" policy="dynamic" bind="setRegistryService" unbind="unsetRegistryService"
  */
 public class ExecutionPlanDeployerDS {
 
@@ -63,5 +68,14 @@ public class ExecutionPlanDeployerDS {
 
     public void unsetEventProcessorService(EventProcessorService eventProcessorService) {
         ExecutionPlanDeployerValueHolder.setEventProcessorService(null);
+    }
+
+    protected void setRegistryService(RegistryService registryService) throws
+            RegistryException {
+        ExecutionPlanDeployerValueHolder.setRegistryService(registryService);
+    }
+
+    protected void unsetRegistryService(RegistryService registryService) {
+        ExecutionPlanDeployerValueHolder.setRegistryService(null);
     }
 }
