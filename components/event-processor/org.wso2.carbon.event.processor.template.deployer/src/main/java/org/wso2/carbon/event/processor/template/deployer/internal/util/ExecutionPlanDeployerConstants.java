@@ -13,7 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.wso2.carbon.event.processor.template.deployer.internal;
+package org.wso2.carbon.event.processor.template.deployer.internal.util;
+
+import org.wso2.carbon.event.template.manager.core.internal.util.TemplateManagerConstants;
+import org.wso2.carbon.registry.core.RegistryConstants;
 
 public class ExecutionPlanDeployerConstants {
 
@@ -21,5 +24,10 @@ public class ExecutionPlanDeployerConstants {
 
     public static final String REGEX_NAME_COMMENTED_VALUE = "\\(.*?\\)";
 
+    public static final String META_INFO_COLLECTION_PATH = TemplateManagerConstants.DEPLOYER_META_INFO_PATH
+            + RegistryConstants.PATH_SEPARATOR
+            + ExecutionPlanDeployerConstants.REALTIME_DEPLOYER_TYPE;
+    public static final String META_INFO_PLAN_NAME_SEPARATOR = ",";
 
+    public static final String REALTIME_DEPLOYER_TYPE = "realtime";
 }

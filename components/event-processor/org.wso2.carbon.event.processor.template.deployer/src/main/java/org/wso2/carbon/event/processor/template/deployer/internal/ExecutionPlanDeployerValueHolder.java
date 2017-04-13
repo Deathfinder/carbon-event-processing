@@ -17,11 +17,13 @@ package org.wso2.carbon.event.processor.template.deployer.internal;
 
 import org.wso2.carbon.event.processor.core.EventProcessorService;
 import org.wso2.carbon.event.stream.core.EventStreamService;
+import org.wso2.carbon.registry.core.service.RegistryService;
 
 public class ExecutionPlanDeployerValueHolder {
 
     private static EventProcessorService eventProcessorService;
     private static EventStreamService eventStreamService;
+    private static RegistryService registryService;
 
 
     public static void setEventStreamService(EventStreamService eventBuilderService) {
@@ -40,5 +42,12 @@ public class ExecutionPlanDeployerValueHolder {
         ExecutionPlanDeployerValueHolder.eventProcessorService = eventProcessorService;
     }
 
+    public static void setRegistryService(RegistryService registryService) {
+        ExecutionPlanDeployerValueHolder.registryService = registryService;
+    }
+
+    public static RegistryService getRegistryService() {
+        return registryService;
+    }
 
 }
