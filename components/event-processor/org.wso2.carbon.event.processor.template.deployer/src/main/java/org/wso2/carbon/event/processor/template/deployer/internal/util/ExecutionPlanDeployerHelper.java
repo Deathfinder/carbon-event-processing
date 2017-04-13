@@ -64,17 +64,17 @@ public class ExecutionPlanDeployerHelper {
             }
 
             if (mappingResourceContent.equals("")) {
-                //undeploying existing stream
-                if (ExecutionPlanDeployerValueHolder.getEventProcessorService().getAllActiveExecutionConfigurations().keySet().contains(planId)) {
-                    ExecutionPlanDeployerValueHolder.getEventProcessorService().undeployActiveExecutionPlan(planId);
-                } else {
-                    ExecutionPlanDeployerValueHolder.getEventProcessorService().undeployInactiveExecutionPlan(planId + EventProcessorConstants.EP_CONFIG_FILE_EXTENSION_WITH_DOT);
-                }
                 //deleting mappingResource
                 registry.delete(mappingResourcePath);
             } else {
                 mappingResource.setContent(mappingResourceContent);
                 registry.put(mappingResourcePath, mappingResource);
+            }
+            //undeploying existing stream
+            if (ExecutionPlanDeployerValueHolder.getEventProcessorService().getAllActiveExecutionConfigurations().keySet().contains(planId)) {
+                ExecutionPlanDeployerValueHolder.getEventProcessorService().undeployActiveExecutionPlan(planId);
+            } else {
+                ExecutionPlanDeployerValueHolder.getEventProcessorService().undeployInactiveExecutionPlan(planId + EventProcessorConstants.EP_CONFIG_FILE_EXTENSION_WITH_DOT);
             }
         } catch (RegistryException e) {
             throw new TemplateDeploymentException("Could not load the Registry for Tenant Domain: "
