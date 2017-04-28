@@ -27,6 +27,7 @@ import org.wso2.carbon.event.processor.template.deployer.internal.util.Execution
 import org.wso2.carbon.event.template.manager.core.DeployableTemplate;
 import org.wso2.carbon.event.template.manager.core.TemplateDeployer;
 import org.wso2.carbon.event.template.manager.core.TemplateDeploymentException;
+import org.wso2.carbon.event.template.manager.core.structure.configuration.ScenarioConfiguration;
 import org.wso2.carbon.registry.core.Collection;
 import org.wso2.carbon.registry.core.Registry;
 import org.wso2.carbon.registry.core.RegistryConstants;
@@ -81,7 +82,17 @@ public class ExecutionPlanTemplateDeployer implements TemplateDeployer {
             org.wso2.siddhi.query.api.ExecutionPlan parsedExecutionPlan = SiddhiCompiler.parse(executionPlan);
             planId = AnnotationHelper.getAnnotationElement(EventProcessorConstants.ANNOTATION_NAME_NAME, null, parsedExecutionPlan.getAnnotations()).getValue();
 
-            ExecutionPlanDeployerHelper.updateRegistryMaps(registry, infoCollection, artifactId, planId);
+            String planName = getPlanName(template.getConfiguration(), planId);
+
+            //@Plan:name will be updated with given configuration name and uncomment in case if it is commented
+            String executionPlanNameDefinition = ExecutionPlanDeployerConstants.EXECUTION_PLAN_NAME_ANNOTATION + "('"
+                    + planName + "')";
+            executionPlan = executionPlan.replaceAll(
+                    ExecutionPlanDeployerConstants.EXECUTION_PLAN_NAME_ANNOTATION
+                            + ExecutionPlanDeployerConstants.REGEX_NAME_COMMENTED_VALUE,
+                    executionPlanNameDefinition);
+
+            ExecutionPlanDeployerHelper.updateRegistryMaps(registry, infoCollection, artifactId, planName);
             //Get Template Execution plan, Tenant Id and deploy Execution Plan
             ExecutionPlanDeployerValueHolder.getEventProcessorService().deployExecutionPlan(executionPlan);
         } catch (RegistryException e) {
@@ -102,6 +113,13 @@ public class ExecutionPlanTemplateDeployer implements TemplateDeployer {
                     "Validation exception occurred when adding Execution Plan of Template "
                     + template.getConfiguration().getName() + " of Domain " + template.getConfiguration().getDomain(), e);
         }
+    }
+
+    private String getPlanName(ScenarioConfiguration configuration, String planId) {
+        return configuration.getDomain() + ExecutionPlanDeployerConstants.PLAN_NAME_SEPARATOR
+                        + configuration.getScenario() + ExecutionPlanDeployerConstants.PLAN_NAME_SEPARATOR
+                        + configuration.getName()+ ExecutionPlanDeployerConstants.PLAN_NAME_SEPARATOR
+                        + planId;
     }
 
     @Override

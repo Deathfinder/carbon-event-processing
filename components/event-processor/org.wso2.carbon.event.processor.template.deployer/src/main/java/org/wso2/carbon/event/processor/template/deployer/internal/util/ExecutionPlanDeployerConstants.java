@@ -28,6 +28,7 @@ public class ExecutionPlanDeployerConstants {
             + RegistryConstants.PATH_SEPARATOR
             + ExecutionPlanDeployerConstants.REALTIME_DEPLOYER_TYPE;
     public static final String META_INFO_PLAN_NAME_SEPARATOR = ",";
+    public static final String PLAN_NAME_SEPARATOR = "_";
 
     public static final String REALTIME_DEPLOYER_TYPE = "realtime";
 }
